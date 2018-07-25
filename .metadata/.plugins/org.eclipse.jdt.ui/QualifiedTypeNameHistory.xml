@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.sql.DriverManager"/>
+<fullyQualifiedTypeName name="javax.jws.soap.SOAPBinding"/>
+<fullyQualifiedTypeName name="javax.jws.soap.SOAPBinding.Style"/>
+<fullyQualifiedTypeName name="javax.jws.WebMethod"/>
+<fullyQualifiedTypeName name="impacta.ead.jp.estacionamento.apresentacao.StatusEstacionamentoService"/>
+<fullyQualifiedTypeName name="javax.jws.WebService"/>
+<fullyQualifiedTypeName name="impacta.ead.jp.estacionamento.negocio.Vaga"/>
+<fullyQualifiedTypeName name="impacta.ead.jp.estacionamento.persistencia.DAOEstacionamento"/>
+<fullyQualifiedTypeName name="impacta.ead.jp.estacionamento.integracao.StatusBean"/>
+<fullyQualifiedTypeName name="impacta.ead.jp.estacionamento.integracao.StatusEstacionamentoServiceImpl"/>
+<fullyQualifiedTypeName name="javax.xml.ws.Endpoint"/>
+<fullyQualifiedTypeName name="impacta.ead.jp.estacionamento.controle.EstacionamentoController"/>
+<fullyQualifiedTypeName name="javax.xml.bind.annotation.XmlRootElement"/>
+<fullyQualifiedTypeName name="javax.xml.bind.annotation.XmlElement"/>
+<fullyQualifiedTypeName name="impacta.ead.jp.estacionamento.integracao.TesteBean"/>
+</qualifiedTypeNameHistroy>
