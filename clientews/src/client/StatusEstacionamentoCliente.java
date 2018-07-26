@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +16,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+
+import impacta.ead.jp.estacionamento.integracao.StatusBean;
+import impacta.ead.jp.estacionamento.integracao.StatusEstacionamentoService;
 
 public class StatusEstacionamentoCliente extends JFrame {
 
@@ -26,19 +32,20 @@ public class StatusEstacionamentoCliente extends JFrame {
 	private JLabel lblDisponibilidade = new JLabel("---");
 	private JLabel lblOcupacao = new JLabel("---");
 
-	//private StatusEstacionamentoService statusService;
+	private StatusEstacionamentoService statusService;
 
 	public static void main(String args[]) throws Exception {
 		StatusEstacionamentoCliente cliente = new StatusEstacionamentoCliente();
 		cliente.setVisible(true);
 	}
+	
 
 	public StatusEstacionamentoCliente() throws MalformedURLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setTitle("Status do Estacionamento");
 		this.setSize(new Dimension(600, 200));
-
+		
 		this.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
@@ -49,8 +56,15 @@ public class StatusEstacionamentoCliente extends JFrame {
 		btnAtualizar.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO atualizar o status chamando o serviço
+				try {
+					statusService = carregarServico();
+				} catch (MalformedURLException e1) {
+					e1.printStackTrace();
+				}
+				StatusBean bean = statusService.getStatus(); // chamado do webservice
+				carregarLabels(bean); 
 			}
+	
 		});
 		panel.add(btnAtualizar, BorderLayout.NORTH);
 
@@ -99,4 +113,27 @@ public class StatusEstacionamentoCliente extends JFrame {
 		lblDisponibilidade.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel_5.add(lblDisponibilidade, BorderLayout.CENTER);
 	}
+	
+	private StatusEstacionamentoService carregarServico() throws MalformedURLException {
+		StatusEstacionamentoService service = null;
+		
+		// Definir a URL de acesso ao serviço
+		URL url = new URL("http://localhost:8888/status&teste?WSDL");
+		
+		// Qname (Qualified Name) impacta.ead.jp.estacionamento.integracao
+		QName qname = new QName("http://integracao.estacionamento.jp.ead.impacta/", "StatusEstacionamentoServiceImplService");
+		
+		// Criação de um proxy de comunicação com o serviço
+		Service srv = Service.create(url, qname); 
+		service = srv.getPort(StatusEstacionamentoService.class);  // obtem o proxy
+		return service;
+	}
+
+	protected void carregarLabels(StatusBean bean) {
+		this.lblDisponibilidade.setText(""+bean.getVagasLivres());
+		this.lblOcupacao.setText(""+bean.getVagasOcupadas());
+		this.lblFaturamento.setText(""+bean.getFaturamentoDia());
+		
+	}
+	
 }
